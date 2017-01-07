@@ -124,7 +124,7 @@ public class AxisScene extends Scene implements ApplyXY , BasicMovement{
 		gl.glDeleteShader(vertShader);
 		gl.glDeleteShader(fragShader);
 
-		List<ColoredTriangle> triangles = createAxisTriangles(100);
+		List<ColoredTriangle> triangles = new AxisTrianges(100).createAxisTriangles();
 		float[] vertices = ColoredTriangle.verticesToArray(triangles);
 		float[] colors = ColoredTriangle.colorsToArray(triangles);
 		FloatBuffer fbVertices = Buffers.newDirectFloatBuffer(vertices);
@@ -259,87 +259,7 @@ public class AxisScene extends Scene implements ApplyXY , BasicMovement{
 		System.out.println(eye + rot.toString());
 	}
 
-	private List<ColoredTriangle> createAxisTriangles(int total) {
-		List<ColoredTriangle> triangles  = new ArrayList<>();
-
-		/*
-		 * Create arrows
-		 */
-		// Positive z
-		for (int j = 1; j < (total + 1); j++) {
-			triangles.add(new ColoredTriangle(
-					0.0f, 0.0f, (float) j + 1.0f,
-					-0.5f, 0.0f, (float) j,
-					0.5f, 0.0f, (float) j ,
-
-					0.0f, 0.0f, 1.0f,
-					1.0f, 1.0f, 1.0f,
-					1.0f, 1.0f, 1.0f
-					));
-		}
-
-		// Neg z
-		for (int j = 1; j < (total + 1); j++) {
-			triangles.add(new ColoredTriangle(
-					0.0f, 0.0f, -((float) j + 1.0f),
-					-0.5f, 0.0f, -(float) j,
-					0.5f, 0.0f, -(float) j,
-
-					0.0f, 0.0f, 1.0f,
-					0.0f, 0.0f, 0.0f,
-					0.0f, 0.0f, 0.0f
-					));
-		}
-
-		// Pos y
-		for (int j = 1; j < (total + 1); j++) {
-			triangles.add(new ColoredTriangle(
-					0.0f, (float) j + 1.0f, 0.0f,
-					-0.5f, (float) j, 0.0f,
-					0.5f, (float) j, 0.0f,
-
-					0.0f, 1.0f, 0.0f,
-					1.0f, 1.0f, 1.0f,
-					1.0f, 1.0f, 1.0f  ));
-		}
-
-		// neg y
-		for (int j = 1; j < (total + 1); j++) {
-			triangles.add(new ColoredTriangle(
-					0.0f, -((float) j + 1.0f), 0.0f,
-					-0.5f, -(float) j, 0.0f,
-					0.5f, -(float) j, 0.0f,
-
-					0.0f, 1.0f, 0.0f,
-					0.0f, 0.0f, 0.0f,
-					0.0f, 0.0f, 0.0f  ));
-		}
-
-		// pos x
-		for (int j = 1; j < (total + 1); j++) {
-			triangles.add(new ColoredTriangle(
-					(float) j + 1.0f, 0.0f, 0.0f,
-					(float) j, 0.0f, -0.5f,
-					(float) j, 0.0f, 0.5f,
-
-					1.0f, 0.0f, 0.0f,
-					1.0f, 1.0f, 1.0f,
-					1.0f, 1.0f, 1.0f  ));
-		}
-
-		// neg x
-		for (int j = 1; j < (total + 1); j++) {
-			triangles.add(new ColoredTriangle(
-					-((float) j + 1.0f), 0.0f, 0.0f,
-					-(float) j, 0.0f, -0.5f,
-					-(float) j, 0.0f, 0.5f,
-
-					1.0f, 0.0f, 0.0f,
-					0.0f, 0.0f, 0.0f,
-					0.0f, 0.0f, 0.0f  ));
-		}
-		return triangles;
-	}
+	
 
 	private int createShaderFromString(GL3 gl, String shaderCode,int type) {
 		int shader =  gl.glCreateShader(type);;
